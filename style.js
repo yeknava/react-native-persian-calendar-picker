@@ -22,7 +22,7 @@ function normalize(size: number): number {
 
 var styles = StyleSheet.create({
   calendar: {
-    height: normalize(320),
+    height: normalize(400),
     marginTop: normalize(10),
   },
   dayWrapper: {
@@ -48,7 +48,12 @@ var styles = StyleSheet.create({
     marginTop: normalize(6),
     alignSelf: 'center',
   },
-
+  monthPicker: {
+    marginBottom: -10
+  },
+  yearPicker: {
+    marginBottom: -10
+  },
   dayLabelsWrapper: {
     flexDirection: 'row',
     marginBottom: normalize(10),
@@ -76,23 +81,56 @@ var styles = StyleSheet.create({
     borderRadius: normalize(30),
     alignSelf: 'center',
   },
+  yearLabel: {
+    fontSize: normalize(20),
+    color: '#000',
+    width: normalize(180),
+    textAlign: 'center',
+  },
   monthLabel: {
     fontSize: normalize(16),
     color: '#000',
     width: normalize(180),
     textAlign: 'center',
   },
+  headTitleWrapper: {
+    alignItems: 'center',
+    flexDirection: 'row-reverse',
+    alignSelf: 'center',
+    paddingBottom: 5
+  },
+  headBodyWrapper: {
+    flexDirection: 'row',
+  },
+  yearPickerWrapper: {
+    width: normalize(120),
+  },
+  monthPickerWrapper: {
+    width: normalize(180),
+  },
   headerWrapper: {
     alignItems: 'center',
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignSelf: 'center',
     marginBottom: normalize(10),
     padding: normalize(5),
     paddingBottom: normalize(3),
     backgroundColor: 'transparent',
   },
-  monthSelector: {
+  prevMonth: {
     width: normalize(80),
+    flex: 1,
+    alignItems: 'flex-start',
+
+    paddingLeft: 5,
+    paddingTop: 5
+  },
+  nextMonth: {
+    width: normalize(80),
+    flex: 1,
+    alignItems: 'flex-end',
+    paddingRight: 5,
+    paddingTop: 5
   },
   prev: {
     textAlign: 'right',
@@ -102,12 +140,12 @@ var styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: normalize(14),
   },
-  yearLabel: {
-    fontSize: normalize(14),
-    fontWeight: 'bold',
-    color: '#000',
-    textAlign: 'center',
-  },
+  // yearLabel: {
+  //   fontSize: normalize(14),
+  //   fontWeight: 'bold',
+  //   color: '#000',
+  //   textAlign: 'center',
+  // },
   weeks: {
     flexDirection: 'column',
   },

@@ -11,7 +11,8 @@ import React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Picker
 } from 'react-native';
 
 var styles = require('./style');
@@ -27,11 +28,18 @@ var HeaderControls = React.createClass({
     getNextYear: React.PropTypes.func.isRequired,
     getPrevYear: React.PropTypes.func.isRequired,
     onMonthChange: React.PropTypes.func.isRequired,
-    textStyle: Text.propTypes.style
+    textStyle: Text.propTypes.style,
+    onYearChange: React.PropTypes.func.isRequired,
+    minDate: React.PropTypes.instanceOf(Date),
+    maxDate: React.PropTypes.instanceOf(Date)
   },
   getInitialState() {
     return {
-      selectedMonth: this.props.month
+      selectedMonth: this.props.month,
+      yearPicker: false,
+      monthPicker: false,
+      year: '',
+      month: ''
     };
   },
 
@@ -40,7 +48,7 @@ var HeaderControls = React.createClass({
   //
   componentWillReceiveProps: function(newProps) {
     this.setState({
-      selectedMonth: newProps.month
+      selectedMonth: newProps.month,
     });
   },
 
@@ -102,6 +110,16 @@ var HeaderControls = React.createClass({
            );
   },
 
+  onYearSelect(year) {
+      this.setState({yearPicker: !this.state.yearPicker});
+      this.props.onYearChange(year);
+  },
+
+  onMonthSelect(month) {
+      this.setState({monthPicker: !this.state.monthPicker});
+      this.props.onMonthChange(month);
+  },
+
   render() {
     var textStyle = this.props.textStyle;
 
@@ -133,20 +151,76 @@ var HeaderControls = React.createClass({
       );
     }
 
+    var yearsItems = [];
+    //console.log(this.props.minDate.jYear());
+    // var minYear = moment(this.props.minDate.year()+'/'+(this.props.minDate.month())+'/'+this.props.minDate.day(), 'jYYYY/jM/jD');
+    var minYear = typeof this.props.minDate != 'undefined' ? this.props.minDate.jYear() : 1340;
+    var maxYear = typeof this.props.maxDate != 'undefined' ? this.props.maxDate.jYear() : 1400;
+    for (var i = 1300; i <= 1400; i++) {
+        yearsItems.push(<Picker.Item key={i} label={''+i+''} value={i} />)
+    }
+
+    var months = typeof this.props.months != 'undefined' ? this.props.months : MONTHS;
+    var monthValue = 0;
+    months = months.map(function(month) {
+        return (<Picker.Item key={month} label={month} value={monthValue++} />);
+    });
+
+    var month = null;
+
+    if(false) {
+        month = (<View>
+              <TouchableOpacity onPress={()=>this.setState({monthPicker: !this.state.monthPicker})}>
+                  <View>
+                      <Text style={[styles.monthLabel, textStyle]}>
+                        { (this.props.months || MONTHS)[this.state.selectedMonth] }
+                      </Text>
+                  </View>
+              </TouchableOpacity>
+          </View>);
+    } else {
+        month = (<View style={styles.monthPickerWrapper}>
+            <Picker
+                style={styles.monthPicker}
+                selectedValue={this.state.selectedMonth}
+                onValueChange={(month) => this.onMonthSelect(month)}>
+                {months}
+            </Picker>
+        </View>);
+    }
+
+    var year = null;
+    if(false) {
+        year = (<TouchableOpacity onPress={()=>this.setState({yearPicker: !this.state.yearPicker})}>
+            <View>
+                <Text style={[styles.yearLabel, textStyle]}>
+                  { this.props.year }
+                </Text>
+            </View>
+        </TouchableOpacity>);
+    } else {
+        year = (<View style={styles.yearPickerWrapper}><Picker
+              style={styles.yearPicker}
+              selectedValue={this.props.year}
+              onValueChange={(year) => this.onYearSelect(year)}>
+              {yearsItems}
+          </Picker></View>);
+    }
+
     return (
       <View style={styles.headerWrapper}>
-        <View style={styles.monthSelector}>
-          {next}
+        <View style={styles.headTitleWrapper}>
+          {year}
+          {month}
         </View>
-        <View>
-          <Text style={[styles.monthLabel, textStyle]}>
-            { (this.props.months || MONTHS)[this.state.selectedMonth] } { this.props.year }
-          </Text>
+        <View style={styles.headBodyWrapper}>
+            <View style={styles.prevMonth}>
+              {next}
+            </View>
+            <View style={styles.nextMonth}>
+              {previous}
+            </View>
         </View>
-        <View style={styles.monthSelector}>
-          {previous}
-        </View>
-
       </View>
     );
   },

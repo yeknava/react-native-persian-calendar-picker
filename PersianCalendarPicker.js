@@ -11,7 +11,7 @@ import React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 var moment = require('moment-jalaali');
 
@@ -38,7 +38,7 @@ var PersianCalendarPicker = React.createClass({
   },
   getDefaultProps() {
     return {
-      onDateChange () {}
+      onDateChange () {},
     };
   },
   getInitialState() {
@@ -52,7 +52,7 @@ var PersianCalendarPicker = React.createClass({
       day: date.jDate(),
       month: date.jMonth(),
       year: date.jYear(),
-      selectedDay: []
+      selectedDay: [],
     };
   },
 
@@ -77,6 +77,10 @@ var PersianCalendarPicker = React.createClass({
     this.setState({month: month}, () => { this.onDateChange(); });
   },
 
+  onYearChange(year) {
+    this.setState({year: year}, () => { this.onDateChange(); });
+  },
+
   getNextYear(){
     this.setState({year: this.state.year + 1}, () => { this.onDateChange(); });
   },
@@ -92,13 +96,14 @@ var PersianCalendarPicker = React.createClass({
       year,
     } = this.state;
     var date = moment(year+'/'+(month + 1)+'/'+day, 'jYYYY/jM/jD');
-    var date2 = new Date(date.year(), date.month(), date.date());
 
+    var date2 = new Date(date.year(), date.month(), date.date());
     this.setState({date: date});
     this.props.onDateChange(date2);
   },
 
   render() {
+
     return (
       <View style={styles.calendar}>
         <HeaderControls
@@ -107,6 +112,7 @@ var PersianCalendarPicker = React.createClass({
           year={this.state.year}
           month={this.state.month}
           onMonthChange={this.onMonthChange}
+          onYearChange={this.onYearChange}
           getNextYear={this.getNextYear}
           getPrevYear={this.getPrevYear}
           months={this.props.months}
@@ -127,9 +133,9 @@ var PersianCalendarPicker = React.createClass({
           date={this.state.date}
           onDayChange={this.onDayChange}
           screenWidth={this.props.screenWidth}
+          selectedDayColor={this.props.selectedDayColor}
           selectedDayTextColor={this.props.selectedDayTextColor}
-          textStyle={this.props.textStyle}
-        />
+          textStyle={this.props.textStyle}/>
       </View>
     );
   },
