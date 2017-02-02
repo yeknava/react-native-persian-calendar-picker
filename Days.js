@@ -27,6 +27,7 @@ var Days = React.createClass({
     maxDate: React.PropTypes.instanceOf(moment),
     minDate: React.PropTypes.instanceOf(moment),
     date: React.PropTypes.object.isRequired,
+    day: React.PropTypes.number.isRequired,
     month: React.PropTypes.number.isRequired,
     year: React.PropTypes.number.isRequired,
     onDayChange: React.PropTypes.func.isRequired,
@@ -36,42 +37,21 @@ var Days = React.createClass({
   },
   getInitialState() {
     return {
-      selectedStates: []
+      //selectedStates: [],
     };
   },
 
   componentDidMount() {
-    this.updateSelectedStates(this.props.date.jDate());
+    //this.updateSelectedStates(this.props.date.jDate());
   },
 
   // Trigger date change if new props are provided.
   // Typically, when selectedDate is changed programmatically.
   //
   componentWillReceiveProps: function(newProps) {
-    this.updateSelectedStates(newProps.date.jDate());
-  },
-
-  updateSelectedStates(day) {
-    var selectedStates = [],
-      daysInMonth = moment.jDaysInMonth(this.props.year, this.props.month),
-      i;
-
-    for (i = 1; i <= daysInMonth; i++) {
-      if (i === day) {
-        selectedStates.push(true);
-      } else {
-        selectedStates.push(false);
-      }
-    }
-
-    this.setState({
-      selectedStates: selectedStates
-    });
-
   },
 
   onPressDay(day) {
-    this.updateSelectedStates(day);
     this.props.onDayChange({day: day});
   },
 
@@ -100,7 +80,7 @@ var Days = React.createClass({
             columns.push(<Day
                       key={j}
                       day={currentDay+1}
-                      selected={this.state.selectedStates[currentDay]}
+                      selected={this.props.day === currentDay+1}
                       date={moment(year+'/'+(month + 1)+'/'+(currentDay + 1), 'jYYYY/jM/jD')}
                       maxDate={this.props.maxDate}
                       minDate={this.props.minDate}

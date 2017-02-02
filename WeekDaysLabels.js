@@ -1,13 +1,4 @@
-/**
- * Persian Calendar Picker Component
- *
- * Copyright 2016 Reza (github.com/rghorbani)
- * Licensed under the terms of the MIT license. See LICENSE file in the project root for terms.
- */
-
-'use strict';
-
-import React from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Text,
@@ -18,15 +9,14 @@ var {
   WEEKDAYS,
 } = require('./util');
 
-var WeekDaysLabels = React.createClass({
-  propTypes: {
-    screenWidth: React.PropTypes.number,
-    textStyle: Text.propTypes.style
-  },
-  getInitialState() {
-    this.DAY_WIDTH = (this.props.screenWidth - 16)/7;
-    return null;
-  },
+class WeekDaysLabels extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            DAY_WIDTH: (this.props.screenWidth - 16)/7
+        };
+    }
+
   render() {
     var labels = (this.props.weekdays || WEEKDAYS).map((day, key) => { return <Text key={key} style={[styles.dayLabels, this.props.textStyle]}>{day}</Text>; });
     labels.reverse();
@@ -35,7 +25,12 @@ var WeekDaysLabels = React.createClass({
         { labels }
       </View>
     );
-  },
-});
+  }
+}
 
-module.exports = WeekDaysLabels;
+WeekDaysLabels.propTypes = {
+  screenWidth: React.PropTypes.number,
+  textStyle: Text.propTypes.style
+};
+
+export default WeekDaysLabels;

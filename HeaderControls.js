@@ -14,6 +14,8 @@ import {
   TouchableOpacity,
   Picker
 } from 'react-native';
+var moment = require('moment-jalaali');
+
 
 var styles = require('./style');
 var {
@@ -154,10 +156,10 @@ var HeaderControls = React.createClass({
     var yearsItems = [];
     //console.log(this.props.minDate.jYear());
     // var minYear = moment(this.props.minDate.year()+'/'+(this.props.minDate.month())+'/'+this.props.minDate.day(), 'jYYYY/jM/jD');
-    var minYear = typeof this.props.minDate != 'undefined' ? this.props.minDate.jYear() : 1340;
-    var maxYear = typeof this.props.maxDate != 'undefined' ? this.props.maxDate.jYear() : 1400;
-    for (var i = 1300; i <= 1400; i++) {
-        yearsItems.push(<Picker.Item key={i} label={''+i+''} value={i} />)
+    var minYear = typeof this.props.minDate != 'undefined' ? moment(this.props.minDate).jYear() : 1340;
+    var maxYear = typeof this.props.maxDate != 'undefined' ? moment(this.props.maxDate).jYear() : 1400;
+    for (var i = minYear; i <= maxYear; i++) {
+        yearsItems.push(<Picker.Item key={i} label={''+i.toLocaleString('ar-EG', { useGrouping: false })+''} value={i} />)
     }
 
     var months = typeof this.props.months != 'undefined' ? this.props.months : MONTHS;

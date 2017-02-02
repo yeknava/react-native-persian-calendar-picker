@@ -44,6 +44,7 @@ var Day = React.createClass({
     this.BORDER_RADIUS = this.SELECTED_DAY_WIDTH / 2;
     return null;
   },
+
   render() {
     var textStyle = this.props.textStyle;
     if (this.props.selected) {
@@ -56,7 +57,7 @@ var Day = React.createClass({
               style={styles.dayButton}
               onPress={() => this.props.onDayChange(this.props.day) }>
               <Text style={[styles.dayLabel, textStyle, selectedDayTextColorStyle]}>
-                {this.props.day}
+                {this.props.day.toLocaleString('ar-EG')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -67,7 +68,7 @@ var Day = React.createClass({
         return (
           <View style={styles.dayWrapper}>
             <Text style={[styles.dayLabel, textStyle, styles.disabledTextColor]}>
-              {this.props.day}
+              {this.props.day.toLocaleString('ar-EG')}
             </Text>
           </View>
         );
@@ -78,7 +79,7 @@ var Day = React.createClass({
             style={styles.dayButton}
             onPress={() => this.props.onDayChange(this.props.day) }>
               <Text style={[styles.dayLabel, textStyle]}>
-                {this.props.day}
+                {this.props.day.toLocaleString('ar-EG')}
               </Text>
             </TouchableOpacity>
           </View>
