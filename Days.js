@@ -24,8 +24,6 @@ var Day = require('./Day');
 
 var Days = React.createClass({
   propTypes: {
-    maxDate: React.PropTypes.instanceOf(moment),
-    minDate: React.PropTypes.instanceOf(moment),
     date: React.PropTypes.object.isRequired,
     day: React.PropTypes.number.isRequired,
     month: React.PropTypes.number.isRequired,

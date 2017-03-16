@@ -32,8 +32,6 @@ var HeaderControls = React.createClass({
     onMonthChange: React.PropTypes.func.isRequired,
     textStyle: Text.propTypes.style,
     onYearChange: React.PropTypes.func.isRequired,
-    minDate: React.PropTypes.instanceOf(Date),
-    maxDate: React.PropTypes.instanceOf(Date)
   },
   getInitialState() {
     return {
@@ -98,16 +96,16 @@ var HeaderControls = React.createClass({
 
   previousMonthDisabled() {
     return ( this.props.minDate &&
-             ( this.props.year < this.props.minDate.getFullYear() ||
-               ( this.props.year == this.props.minDate.getFullYear() && this.state.selectedMonth <= this.props.minDate.getMonth() )
+             ( this.props.year < this.props.minDate.jYear() ||
+               ( this.props.year == this.props.minDate.jYear() && this.state.selectedMonth <= this.props.minDate.jMonth() )
              )
            );
   },
 
   nextMonthDisabled() {
     return ( this.props.maxDate &&
-             ( this.props.year > this.props.maxDate.getFullYear() ||
-               ( this.props.year == this.props.maxDate.getFullYear() && this.state.selectedMonth >= this.props.maxDate.getMonth() )
+             ( this.props.year > this.props.maxDate.jYear() ||
+               ( this.props.year == this.props.maxDate.jYear() && this.state.selectedMonth >= this.props.maxDate.jMonth() )
              )
            );
   },
@@ -156,8 +154,8 @@ var HeaderControls = React.createClass({
     var yearsItems = [];
     //console.log(this.props.minDate.jYear());
     // var minYear = moment(this.props.minDate.year()+'/'+(this.props.minDate.month())+'/'+this.props.minDate.day(), 'jYYYY/jM/jD');
-    var minYear = typeof this.props.minDate != 'undefined' ? moment(this.props.minDate).jYear() : 1340;
-    var maxYear = typeof this.props.maxDate != 'undefined' ? moment(this.props.maxDate).jYear() : 1400;
+    var minYear = typeof this.props.minDate != 'undefined' ? this.props.minDate.jYear() : 1340;
+    var maxYear = typeof this.props.maxDate != 'undefined' ? this.props.maxDate.jYear() : 1400;
     for (var i = minYear; i <= maxYear; i++) {
         yearsItems.push(<Picker.Item key={i} label={''+i.toLocaleString('ar-EG', { useGrouping: false })+''} value={i} />)
     }

@@ -15,13 +15,13 @@ import {
 } from 'react-native';
 
 var styles = require('./style');
+var moment = require('moment-jalaali');
+
 
 var Day = React.createClass({
   propTypes: {
     date: React.PropTypes.object,
     onDayChange: React.PropTypes.func,
-    maxDate: React.PropTypes.instanceOf(Date),
-    minDate: React.PropTypes.instanceOf(Date),
     selected: React.PropTypes.bool,
     day: React.PropTypes.oneOfType([
       React.PropTypes.number,

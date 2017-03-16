@@ -23,12 +23,17 @@ class PersianCalendarPicker extends Component {
   constructor(props) {
       super(props);
       var date = moment(this.props.selectedDate);
+      var minDate = typeof this.props.minDate != 'undefined' ? moment(this.props.minDate) : undefined;
+      var maxDate = typeof this.props.maxDate != 'undefined' ? moment(this.props.maxDate) : undefined;
+      console.log(typeof moment(this.props.maxDate));
       this.state = {
           date: date,
           day: date.jDate(),
           month: date.jMonth(),
           year: date.jYear(),
           selectedDay: [],
+          minDate: minDate,
+          maxDate: maxDate
       };
   }
 
@@ -83,8 +88,8 @@ class PersianCalendarPicker extends Component {
     return (
       <View style={styles.calendar}>
         <HeaderControls
-          maxDate={this.props.maxDate}
-          minDate={this.props.minDate}
+          maxDate={this.state.maxDate}
+          minDate={this.state.minDate}
           year={this.state.year}
           month={this.state.month}
           onMonthChange={this.onMonthChange.bind(this)}
@@ -102,8 +107,8 @@ class PersianCalendarPicker extends Component {
           textStyle={this.props.textStyle}
         />
         <Days
-          maxDate={this.props.maxDate}
-          minDate={this.props.minDate}
+          maxDate={this.state.maxDate}
+          minDate={this.state.minDate}
           day={this.state.day}
           month={this.state.month}
           year={this.state.year}
