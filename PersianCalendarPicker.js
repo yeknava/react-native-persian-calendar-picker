@@ -25,7 +25,6 @@ class PersianCalendarPicker extends Component {
       var date = moment(this.props.selectedDate);
       var minDate = typeof this.props.minDate != 'undefined' ? moment(this.props.minDate) : undefined;
       var maxDate = typeof this.props.maxDate != 'undefined' ? moment(this.props.maxDate) : undefined;
-      console.log(typeof moment(this.props.maxDate));
       this.state = {
           date: date,
           day: date.jDate(),
